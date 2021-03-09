@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        CountryAdapter.RecyclerViewClickListener mlistener = new CountryAdapter.RecyclerViewClickListener() { //thisis our onClick method, when we click a method in our rv what we want to happen is written below
+        CountryAdapter.RecyclerViewClickListener mlistener = new CountryAdapter.RecyclerViewClickListener() { //this is our onClick method, when we click a method in our rv what we want to happen is written below
             @Override
             public void onClick(View view, String id) {
-                launchDetailActivity(id); //we want to pass to detail activilty this id so they know which one to open
+                launchDetailActivity(id); //we want to pass to detail activity this id so they know which one to open
             }
         };
         //no we need to initialise the adapter

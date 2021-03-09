@@ -4,4 +4,12 @@
     <string name="rvNC" />
     <string name="tv">rvTC</string>
     <string name="countryflag">COUNTRYFLAG</string>
+    <string name="total_deaths">Total Deaths</string>
+    <string name="total_cases">Total cases</string>
+    <string name="new_cases">New cases</string>
+    <string name="flag">flag</string>
+    <string name="new_deaths">New Deaths</string>
+    <string name="total_recovered">Total recovered</string>
+    <string name="new_recovered">New recovered</string>
+    <string name="search">Search</string>
 </resources>

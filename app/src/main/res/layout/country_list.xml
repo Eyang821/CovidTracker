@@ -50,6 +50,7 @@
         android:id="@+id/rvImage"
         android:layout_width="83dp"
         android:layout_height="78dp"
+        android:layout_margin="8dp"
         android:background="#00E676"
         android:contentDescription="@string/countryflag"
         app:layout_constraintBottom_toBottomOf="parent"

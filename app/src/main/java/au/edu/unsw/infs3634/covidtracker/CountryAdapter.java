@@ -34,10 +34,10 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
 
     @Override
     public void onBindViewHolder(@NonNull CountryAdapter.CountryViewHolder holder, int position) {
-        Country country = mCountries.get(position); //this takes in position so i wan to get a country form my lsit of countries, i want t oget the one tht is relevant in the position of that recycler view. How i do that is: get(index from country list-
+        Country country = mCountries.get(position); //this takes in position so i want to get a country form my list of countries, i want t oget the one tht is relevant in the position of that recycler view. How i do that is: get(index from country list-
         holder.rvcountry.setText(country.getCountry());
         holder.rvTotalCases.setText(String.valueOf(country.getTotalConfirmed()));
-        holder.rvNewCases.setText(String.valueOf(country.getNewConfirmed()));
+        holder.rvNewCases.setText("+" + String.valueOf(country.getNewConfirmed()));
         holder.itemView.setTag(country.getId()); //make sure this is getId or the whole thing will fail!
 
 
