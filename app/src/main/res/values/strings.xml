@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CovidTracker</string>
+    <string name="textview">TextView</string>
+    <string name="rvNC" />
+    <string name="tv">rvTC</string>
+    <string name="countryflag">COUNTRYFLAG</string>
 </resources>
