@@ -9,10 +9,12 @@
         <menu>
             <item
                 android:id="@+id/newCases"
-                android:title="@string/newcases" />
+                android:title="@string/newcases"
+                app:showAsAction="always" />
             <item
                 android:id="@+id/totalCases"
-                android:title="@string/item" />
+                android:title="@string/item"
+                android:visible="true" />
         </menu>
     </item>
     <item
@@ -20,5 +22,5 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/search"
         app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

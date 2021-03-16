@@ -69,9 +69,10 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.newCases:
             mAdapter.sort(CountryAdapter.SORT_METHOD_NEW);
-            return true;
+              return true;
             case R.id.totalCases:
                 mAdapter.sort(CountryAdapter.SORT_METHOD_TOTAL);
+                return true;
             default:
             return super.onOptionsItemSelected(item);
         }

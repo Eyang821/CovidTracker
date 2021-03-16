@@ -18,13 +18,15 @@ import java.util.Comparator;
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder> implements Filterable {
     public ArrayList<Country> mCountries;
     private RecyclerViewClickListener mListener;
+    //tutorial 5
     private ArrayList<Country>mCountriesFiltered;
     public static final int SORT_METHOD_NEW = 1;
-    public static final int SORT_METHOD_TOTAL = 2; //two ints
+    public static final int SORT_METHOD_TOTAL = 2; //two ints created
 
     public CountryAdapter(ArrayList<Country> countries, RecyclerViewClickListener listener) {
         mCountries = countries;
         mListener = listener;
+       mCountriesFiltered = countries;
 
     }
     @Override
@@ -32,7 +34,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         return new Filter() { // right click and it will give you methods to add in, just press enter
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                //have a string called charstring
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
                 } else {
@@ -71,19 +72,16 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
 
     @Override
     public void onBindViewHolder(@NonNull CountryAdapter.CountryViewHolder holder, int position) {
-        Country country = mCountries.get(position); //this takes in position so i want to get a country form my list of countries, i want t oget the one tht is relevant in the position of that recycler view. How i do that is: get(index from country list-
+        Country country = mCountriesFiltered.get(position); //this takes in position so i want to get a country form my list of countries, i want t oget the one tht is relevant in the position of that recycler view. How i do that is: get(index from country list-
         holder.rvcountry.setText(country.getCountry());
         holder.rvTotalCases.setText(String.valueOf(country.getTotalConfirmed()));
         holder.rvNewCases.setText("+" + String.valueOf(country.getNewConfirmed()));
         holder.itemView.setTag(country.getId()); //make sure this is getId or the whole thing will fail!
-
-
     }
 
     @Override
     public int getItemCount() { //its going to tell the adapter how many items it iwll need to make viewholder for if return 0 in next line it says currently need to make 0.
-//        return 0;
-        return mCountries.size();
+        return mCountriesFiltered.size();
     }
 
     public class CountryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -104,6 +102,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
             btlistener.onClick(v, (String) v.getTag());
         }
     }
+    //Tutorial 5
     public void sort(final int sortMethod){
         if(mCountriesFiltered.size()>0){
             Collections.sort(mCountriesFiltered, new Comparator<Country>() {
