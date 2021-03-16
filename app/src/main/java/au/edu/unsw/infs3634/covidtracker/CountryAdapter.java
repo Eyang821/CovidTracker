@@ -41,6 +41,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
                         if (country.getCountry().toLowerCase().contains(charString.toLowerCase())){ //get Country and change it to lower case and see if contains this charsequence
                             filteredList.add(country);
                         }
+
                     }
                     mCountriesFiltered = filteredList;
                 }
