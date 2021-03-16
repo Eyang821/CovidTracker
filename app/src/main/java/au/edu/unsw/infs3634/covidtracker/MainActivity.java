@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 mAdapter.getFilter().filter(s);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String s) {
                 mAdapter.getFilter().filter(s);
