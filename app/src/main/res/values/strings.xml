@@ -12,4 +12,8 @@
     <string name="total_recovered">Total recovered</string>
     <string name="new_recovered">New recovered</string>
     <string name="search">Search</string>
+    <string name="sortmenuitem">sortMenuItem</string>
+    <string name="newcases">newCases</string>
+    <string name="searchh">Searchh</string>
+    <string name="item">Item</string>
 </resources>

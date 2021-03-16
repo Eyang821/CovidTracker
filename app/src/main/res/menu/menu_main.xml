@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sortMenuItem"
+        android:icon="@drawable/twotone_sort_white_18dp"
+        android:title="@string/sortmenuitem"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/newCases"
+                android:title="@string/newcases" />
+            <item
+                android:id="@+id/totalCases"
+                android:title="@string/item" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom" />
+</menu>
