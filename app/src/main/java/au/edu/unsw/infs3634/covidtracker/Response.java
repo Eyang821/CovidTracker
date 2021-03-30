@@ -1,5 +1,5 @@
 package au.edu.unsw.infs3634.covidtracker;
-//package com.countrySummary;
+//package com.countrySummary; <-- deleted. THis came from teh jsonSchema copy and paste file
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

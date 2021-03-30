@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder> implements Filterable {
     public static final int SORT_METHOD_NEW = 1;
@@ -34,12 +34,12 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String charString = constraint.toString();
-                if(charString.isEmpty()) {
+                if (charString.isEmpty()) {
                     mCountriesFiltered = mCountries;
                 } else {
                     List<Country> filteredList = new ArrayList<>();
-                    for(Country country : mCountries) {
-                        if(country.getCountry().toLowerCase().contains(charString.toLowerCase())) {
+                    for (Country country : mCountries) {
+                        if (country.getCountry().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(country);
                         }
                     }
@@ -108,9 +108,9 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
             Collections.sort(mCountriesFiltered, new Comparator<Country>() {
                 @Override
                 public int compare(Country o1, Country o2) {
-                    if(sortMethod == SORT_METHOD_NEW) {
+                    if (sortMethod == SORT_METHOD_NEW) {
                         return o2.getNewConfirmed().compareTo(o1.getNewConfirmed());
-                    } else if(sortMethod == SORT_METHOD_TOTAL) {
+                    } else if (sortMethod == SORT_METHOD_TOTAL) {
                         return o2.getTotalConfirmed().compareTo(o1.getTotalConfirmed());
                     }
                     return o2.getTotalConfirmed().compareTo(o1.getTotalConfirmed());

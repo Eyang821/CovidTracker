@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         Gson gson = new Gson();
-        Response response = gson.fromJson(Response.json, Response.class);
+        Response response = gson.fromJson(Response.json, Response.class); //lower case json as we are linking to this object
         mAdapter = new CountryAdapter(response.getCountries(), listener);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
