@@ -3,7 +3,6 @@ package au.edu.unsw.infs3634.covidtracker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.SearchView.OnQueryTextListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,30 +12,32 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private CountryAdapter mAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView = findViewById(R.id.rvlist);
+        mRecyclerView = findViewById(R.id.rvList);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        CountryAdapter.RecyclerViewClickListener mlistener = new CountryAdapter.RecyclerViewClickListener() { //this is our onClick method, when we click a method in our rv what we want to happen is written below
+        CountryAdapter.RecyclerViewClickListener listener = new CountryAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View view, String id) {
-                launchDetailActivity(id); //we want to pass to detail activity this id so they know which one to open
+                launchDetailActivity(id);
             }
         };
-        //no we need to initialise the adapter
-        mAdapter = new CountryAdapter(Country.getCountries(), mlistener); //bc in other page we have constructor which passed in array and something else in other java file
+        Gson gson = new Gson();
+        Response response = gson.fromJson(Response.json, Response.class);
+        mAdapter = new CountryAdapter(response.getCountries(), listener);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void launchDetailActivity(String message) {
@@ -45,36 +46,38 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
-        //first up you need a menu inflater
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main,menu);
+        inflater.inflate(R.menu.menu_main, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                mAdapter.getFilter().filter(s);
+            public boolean onQueryTextSubmit(String query) {
+                mAdapter.getFilter().filter(query);
                 return false;
             }
+
             @Override
-            public boolean onQueryTextChange(String s) {
-                mAdapter.getFilter().filter(s);
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
                 return false;
             }
         });
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.newCases:
-            mAdapter.sort(CountryAdapter.SORT_METHOD_NEW);
-              return true;
-            case R.id.totalCases:
+            case R.id.sort_new:
+                mAdapter.sort(CountryAdapter.SORT_METHOD_NEW);
+                return true;
+            case R.id.sort_total:
                 mAdapter.sort(CountryAdapter.SORT_METHOD_TOTAL);
                 return true;
             default:
-            return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
     }
 }

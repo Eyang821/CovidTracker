@@ -11,35 +11,35 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder> implements Filterable {
-    public ArrayList<Country> mCountries;
-    private RecyclerViewClickListener mListener;
-    //tutorial 5
-    private ArrayList<Country>mCountriesFiltered;
     public static final int SORT_METHOD_NEW = 1;
-    public static final int SORT_METHOD_TOTAL = 2; //two ints created
+    public static final int SORT_METHOD_TOTAL = 2;
+    private List<Country> mCountries;
+    private List<Country> mCountriesFiltered;
+    private RecyclerViewClickListener mListener;
 
-    public CountryAdapter(ArrayList<Country> countries, RecyclerViewClickListener listener) {
+    public CountryAdapter(List<Country> countries, RecyclerViewClickListener listener) {
         mCountries = countries;
+        mCountriesFiltered = countries;
         mListener = listener;
-       mCountriesFiltered = countries;
-
     }
+
     @Override
     public Filter getFilter() {
-        return new Filter() { // right click and it will give you methods to add in, just press enter
+        return new Filter() {
             @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if(charString.isEmpty()) {
+                    mCountriesFiltered = mCountries;
                 } else {
-                    ArrayList<Country> filteredList = new ArrayList<>();
-                    for (Country country: mCountries) {
-                        if (country.getCountry().toLowerCase().contains(charString.toLowerCase())){ //get Country and change it to lower case and see if contains this charsequence
+                    List<Country> filteredList = new ArrayList<>();
+                    for(Country country : mCountries) {
+                        if(country.getCountry().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(country);
                         }
                     }
@@ -51,8 +51,8 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
             }
 
             @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mCountriesFiltered = (ArrayList<Country>) filterResults.values;
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mCountriesFiltered = (List<Country>) results.values;
                 notifyDataSetChanged();
             }
         };
@@ -65,58 +65,58 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     @NonNull
     @Override
     public CountryAdapter.CountryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        return null;
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_list, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_list_row, parent, false);
         return new CountryViewHolder(v, mListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CountryAdapter.CountryViewHolder holder, int position) {
-        Country country = mCountriesFiltered.get(position); //this takes in position so i want to get a country form my list of countries, i want t oget the one tht is relevant in the position of that recycler view. How i do that is: get(index from country list-
-        holder.rvcountry.setText(country.getCountry());
-        holder.rvTotalCases.setText(String.valueOf(country.getTotalConfirmed()));
-        holder.rvNewCases.setText("+" + String.valueOf(country.getNewConfirmed()));
-        holder.itemView.setTag(country.getId()); //make sure this is getId or the whole thing will fail!
+        Country country = mCountriesFiltered.get(position);
+        holder.country.setText(country.getCountry());
+        holder.totalCases.setText(String.valueOf(country.getTotalConfirmed()));
+        holder.newCases.setText(String.valueOf(country.getNewConfirmed()));
+        holder.itemView.setTag(country.getID());
     }
 
     @Override
-    public int getItemCount() { //its going to tell the adapter how many items it iwll need to make viewholder for if return 0 in next line it says currently need to make 0.
+    public int getItemCount() {
         return mCountriesFiltered.size();
     }
 
     public class CountryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView rvcountry, rvTotalCases, rvNewCases;   //used to create each one of hte rows
-        private CountryAdapter.RecyclerViewClickListener btlistener;
+        public TextView country, totalCases, newCases;
+        private RecyclerViewClickListener listener;
 
-        public CountryViewHolder(@NonNull View itemView, CountryAdapter.RecyclerViewClickListener listener) {
+        public CountryViewHolder(@NonNull View itemView, RecyclerViewClickListener listener) {
             super(itemView);
-            this.btlistener = listener;
+            this.listener = listener;
             itemView.setOnClickListener(this);
-            rvcountry = itemView.findViewById(R.id.rvCountry);
-            rvTotalCases = itemView.findViewById(R.id.rvTotalCases);
-            rvNewCases = itemView.findViewById(R.id.rvNewCases);
+            country = itemView.findViewById(R.id.tvCountry);
+            totalCases = itemView.findViewById(R.id.tvTotalCases);
+            newCases = itemView.findViewById(R.id.tvNewCases);
         }
 
         @Override
         public void onClick(View v) {
-            btlistener.onClick(v, (String) v.getTag());
+            listener.onClick(v, (String) v.getTag());
         }
+
     }
-    //Tutorial 5
-    public void sort(final int sortMethod){
-        if(mCountriesFiltered.size()>0){
+
+    public void sort(final int sortMethod) {
+        if (mCountriesFiltered.size() > 0) {
             Collections.sort(mCountriesFiltered, new Comparator<Country>() {
                 @Override
-                public int compare(Country c1, Country c2) {
-                    if (sortMethod == SORT_METHOD_NEW) {
-                        return c2.getNewConfirmed().compareTo(c2.getNewConfirmed());
-                    } else if (sortMethod == SORT_METHOD_TOTAL) {
-                        return c2.getTotalConfirmed().compareTo(c1.getTotalConfirmed());
+                public int compare(Country o1, Country o2) {
+                    if(sortMethod == SORT_METHOD_NEW) {
+                        return o2.getNewConfirmed().compareTo(o1.getNewConfirmed());
+                    } else if(sortMethod == SORT_METHOD_TOTAL) {
+                        return o2.getTotalConfirmed().compareTo(o1.getTotalConfirmed());
                     }
-                    return c2.getTotalConfirmed().compareTo(c1.getTotalConfirmed()); //a default option, returns that if default option occurs
+                    return o2.getTotalConfirmed().compareTo(o1.getTotalConfirmed());
                 }
             });
         }
-    notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 }
