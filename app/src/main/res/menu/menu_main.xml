@@ -8,11 +8,11 @@
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/newCases"
+                android:id="@+id/sort_new"
                 android:title="@string/newcases"
                 app:showAsAction="always" />
             <item
-                android:id="@+id/totalCases"
+                android:id="@+id/sort_total"
                 android:title="@string/item"
                 android:visible="true" />
         </menu>
